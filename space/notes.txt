@@ -1,0 +1,13 @@
+Point commun entre player et ennemie/boss
+---------------------------------------------
+- Arme
+- Bouclier
+
+
+Point commun entre player ennemie/boss et meteor
+-------------------------------------------------
+- Une facon de prendre de degats
+- une facon de mourir
+- Une manière de se deplacer
+- Max vie
+- Current vie
