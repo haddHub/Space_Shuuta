@@ -5,21 +5,23 @@
 public class PlayerMovement : MonoBehaviour 
 {
     [SerializeField]
-    private float moveSpeed;    // move speed
+    private float moveSpeed;    // Move speed
 
-    private Rigidbody2D rb;     // my rigidbody2d
+    private Rigidbody2D rb;     // My rigidbody2d
+    private Collider2D col;     // Collider 2d, can be any type of collider2d
     private Bondary mapBondary; // Limits of the map
     private Vector2 sizeOffset; // Offset caused by the size of the sprite
-
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
     }
 
     private void Start()
     {
         mapBondary = MapBondary.instance?.bondary;
-        sizeOffset = new Vector2(GetComponent<Collider2D>().bounds.size.x / 2f, GetComponent<Collider2D>().bounds.size.y / 2f);
+        sizeOffset = new Vector2(col.bounds.size.x / 2f, col.bounds.size.y / 2f);
     }
 
     private void FixedUpdate()

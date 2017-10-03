@@ -3,10 +3,10 @@
 [RequireComponent(typeof(BoxCollider2D))]
 public class MapBondary : MonoBehaviour 
 {
-    private BoxCollider2D col;  // The box collider that define the map limits
+    private BoxCollider2D col;          // The box collider that define the map limits
 
-    public static MapBondary instance; // Singleton
-    public Bondary bondary; // World postion of the bondary
+    public static MapBondary instance;  // Singleton
+    public Bondary bondary;             // World postion of the bondary
 
     private void Awake()
     {
