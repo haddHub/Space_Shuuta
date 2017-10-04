@@ -18,7 +18,9 @@ public class MapBondary : MonoBehaviour
     // Destroy everything that exit the map bondary
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name + "Destroyed !");
+        if (collision == null)
+            return;
+        
         Destroy(collision.gameObject);
     }
 }
@@ -30,7 +32,6 @@ public class Bondary
     public float xMax;
     public float yMin;
     public float yMax;
-
 
     public Bondary(float xmin, float xmax, float ymin, float ymax)
     {
