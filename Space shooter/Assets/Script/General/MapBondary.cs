@@ -33,7 +33,6 @@ public class Bondary
     public float yMin;
     public float yMax;
 
-
     public Bondary(float xmin, float xmax, float ymin, float ymax)
     {
         xMin = xmin;
