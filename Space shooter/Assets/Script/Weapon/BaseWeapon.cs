@@ -12,5 +12,6 @@ public abstract class BaseWeapon : Item
     public override void Use()
     {
         Debug.Log($"{itemName} use !");
+        EquipementManager.instance?.EquipeItem(this);
     }
 }

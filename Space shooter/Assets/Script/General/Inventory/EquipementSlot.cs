@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour 
+public class EquipementSlot : MonoBehaviour 
 {
     private Item item;
     [SerializeField]
@@ -28,10 +28,9 @@ public class InventorySlot : MonoBehaviour
 
     public void UseItem()
     {
-        if(item != null)
+        if (item != null)
         {
-            item.Use();
-            Inventory.instance?.RemoveItem(item);
+            EquipementManager.instance?.UnEquipeItem(item);
         }
     }
 }

@@ -1,34 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class EquipementManager : MonoBehaviour 
+public class EquipementManager : MonoBehaviour
 {
-    private BaseWeapon[] currentEquipement;
+    [SerializeField]
+    private Item[] equipedItem;
+    //Other item
 
     public static EquipementManager instance;
 
-    public delegate void NewEquipementDelegate(BaseWeapon weapon, WeaponSlot slot);
-    public event NewEquipementDelegate NewEquipement;
+    public delegate void onEquipementChanged();
+    public event onEquipementChanged EquipementChangedEvent;
 
     private void Awake()
     {
         instance = this;
+        equipedItem = new Item[Enum.GetNames(typeof(ItemSlot)).Length];
     }
 
-    private void Start()
+    public void EquipeItem(Item newItem)
     {
-        currentEquipement = new BaseWeapon[2];
+        int slot = (int)newItem.slot;
+        UnEquipeItem(equipedItem[slot]);
+        equipedItem[slot] = newItem;
+
+        EquipementChangedEvent?.Invoke();
     }
 
-    public void EquipWeapon(BaseWeapon weapon, WeaponSlot slot)
+    public void UnEquipeItem(Item oldItem)
     {
-        currentEquipement[(int)slot] = weapon;
-        NewEquipement?.Invoke(weapon, slot);
+        if (oldItem != null)
+        {
+            int slot = (int)oldItem.slot;
+            equipedItem[slot] = null;
+            Inventory.instance?.AddItem(oldItem);
+
+            EquipementChangedEvent?.Invoke();
+        }
+    }
+
+    public Item[] GetItem() => equipedItem;
+
+    public int GetItemCount()
+    {
+        return equipedItem.Count(i => i != null);
     }
 }
 
-public enum WeaponSlot
+public enum ItemSlot
 {
-    Slot1 = 0,
-    Slot2 = 1
+    mainWeapon,
+    other
 }

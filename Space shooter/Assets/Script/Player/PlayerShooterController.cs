@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerShooterController : MonoBehaviour, IShooterController
 {
@@ -7,23 +8,32 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
     private float timeBeforeShooting = 0f;
     [SerializeField]
     private Transform weaponSlot1;
-    [SerializeField]
-    private Transform[] weaponSlot2;
+    private EquipementManager equipement;
 
     private void Start()
     {
-        weapon?.Initialize(this);
-        EquipementManager.instance.NewEquipement += Instance_NewEquipement;
+        equipement = EquipementManager.instance;
+        equipement.EquipementChangedEvent += NewEquipement;
+        weapon?.Initialize(this); // the player can start with a weapon without the equipement system
     }
 
-    private void Instance_NewEquipement(BaseWeapon _weapon, WeaponSlot slot)
+    private void NewEquipement()
     {
-        weapon = _weapon;
-        weapon.Initialize(this);
+        Item newWeapon = equipement.GetItem()[(int)ItemSlot.mainWeapon];
+        if (newWeapon == null)
+            weapon = null;
+        else
+        {
+            weapon = newWeapon as BaseWeapon;
+            weapon.Initialize(this);
+        }
     }
 
     private void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (weapon != null)
         {
             timeBeforeShooting -= Time.deltaTime;
