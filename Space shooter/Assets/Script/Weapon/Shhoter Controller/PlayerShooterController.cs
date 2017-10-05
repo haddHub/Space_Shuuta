@@ -6,11 +6,20 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
     private BaseWeapon weapon;
     private float timeBeforeShooting = 0f;
     [SerializeField]
-    private Transform shootingPosition;
+    private Transform weaponSlot1;
+    [SerializeField]
+    private Transform[] weaponSlot2;
 
     private void Start()
     {
         weapon?.Initialize(this);
+        EquipementManager.instance.NewEquipement += Instance_NewEquipement;
+    }
+
+    private void Instance_NewEquipement(BaseWeapon _weapon, WeaponSlot slot)
+    {
+        weapon = _weapon;
+        weapon.Initialize(this);
     }
 
     private void Update()
@@ -21,7 +30,7 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
 
             if (Input.GetMouseButtonDown(0) && timeBeforeShooting <= 0f)
             {
-                weapon.Use();
+                weapon.Fire();
                 timeBeforeShooting = weapon.cooldown;
             }
         }
@@ -30,11 +39,11 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
     public void Fire()
     {
         // Instantiate weapon bullet
-        GameObject newBulletGo = Instantiate(weapon.bullet, shootingPosition.position, Quaternion.identity, transform.parent);
+        GameObject newBulletGo = Instantiate(weapon.bullet, weaponSlot1.position, Quaternion.identity, transform.parent);
         newBulletGo.SetActive(false);
         BaseBullet newBullet = newBulletGo.GetComponent<BaseBullet>();
 
-        newBullet.SetDirection(shootingPosition.position - transform.position);
+        newBullet.SetDirection(weaponSlot1.position - transform.position);
 
         newBullet.HitSomething += BulletHasHitSomething;
         newBulletGo.SetActive(true);
