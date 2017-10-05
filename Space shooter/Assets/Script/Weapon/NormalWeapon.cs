@@ -10,7 +10,7 @@ public class NormalWeapon : BaseWeapon
         shooterController = bsc;
     }
 
-    public override void Use()
+    public override void Fire()
     {
         shooterController?.Fire();
     }
