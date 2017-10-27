@@ -99,7 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ee8d22c893ddf42b6ca8a8c9de8f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 20
+  impactEffect: {fileID: 1558893418262244, guid: c11fabe0014e696428a7a00918ce56d3,
+    type: 2}
 --- !u!212 &212299760353302648
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -22,6 +22,7 @@ public class EquipementManager : MonoBehaviour
 
     public void EquipeItem(Item newItem)
     {
+        Debug.Log("Equiped" + newItem.itemName);
         int slot = (int)newItem.slot;
         UnEquipeItem(equipedItem[slot]);
         equipedItem[slot] = newItem;
@@ -34,10 +35,13 @@ public class EquipementManager : MonoBehaviour
         if (oldItem != null)
         {
             int slot = (int)oldItem.slot;
-            equipedItem[slot] = null;
-            Inventory.instance?.AddItem(oldItem);
+            if (equipedItem[slot] != null)
+            {
+                equipedItem[slot] = null;
+                Inventory.instance?.AddItem(oldItem);
 
-            EquipementChangedEvent?.Invoke();
+                EquipementChangedEvent?.Invoke();
+            }
         }
     }
 

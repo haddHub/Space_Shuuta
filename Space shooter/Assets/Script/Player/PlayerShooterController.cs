@@ -7,14 +7,20 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
     private BaseWeapon weapon;
     private float timeBeforeShooting = 0f;
     [SerializeField]
-    private Transform weaponSlot1;
+    private Transform weaponSlot;
     private EquipementManager equipement;
 
     private void Start()
     {
         equipement = EquipementManager.instance;
+
+        if (weapon != null)
+        {
+            weapon.Initialize(this); // the player can start with a weapon without the equipement system
+            equipement.EquipeItem(weapon);
+        }
+
         equipement.EquipementChangedEvent += NewEquipement;
-        weapon?.Initialize(this); // the player can start with a weapon without the equipement system
     }
 
     private void NewEquipement()
@@ -49,11 +55,11 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
     public void Fire()
     {
         // Instantiate weapon bullet
-        GameObject newBulletGo = Instantiate(weapon.bullet, weaponSlot1.position, Quaternion.identity, transform.parent);
+        GameObject newBulletGo = Instantiate(weapon.bullet, weaponSlot.position, Quaternion.identity, transform.parent);
         newBulletGo.SetActive(false);
         BaseBullet newBullet = newBulletGo.GetComponent<BaseBullet>();
 
-        newBullet.SetDirection(weaponSlot1.position - transform.position);
+        newBullet.SetDirection(weaponSlot.position - transform.position);
 
         newBullet.HitSomething += BulletHasHitSomething;
         newBulletGo.SetActive(true);
@@ -61,7 +67,7 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
 
     private void BulletHasHitSomething(Collider2D collision, BaseBullet sender)
     {
-        if (collision.gameObject == gameObject)
+        if (collision.gameObject == gameObject ||collision.GetComponent<PickupItem>() != null)
             return;
         
         sender.CollideEffect();

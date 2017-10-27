@@ -7,6 +7,8 @@ public abstract class BaseBullet : MonoBehaviour
     [SerializeField]
     protected float moveSpeed;
     protected Vector3 direction;
+    [SerializeField]
+    private GameObject impactEffect;
 
     public delegate void HitSomethingDelegate(Collider2D collision, BaseBullet sender);
     public event HitSomethingDelegate HitSomething;
@@ -41,6 +43,12 @@ public abstract class BaseBullet : MonoBehaviour
 
     public void CollideEffect()
     {
+        if (impactEffect != null)
+        {
+            // adding third the direction to make the impact more on the enemy and not on the edge
+            GameObject impact = Instantiate(impactEffect, transform.position + (direction / 3f), Quaternion.identity);
+            Destroy(impact, 1f); 
+        }
         Destroy(gameObject);
     }
 }
