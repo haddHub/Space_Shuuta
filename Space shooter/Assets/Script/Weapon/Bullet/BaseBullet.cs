@@ -17,7 +17,7 @@ public abstract class BaseBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Map Bondary")
+        if (collision.gameObject.tag == "Map Bondary" || collision.gameObject.tag == "Bullet")
             return;
 
         HitSomething?.Invoke(collision, this);

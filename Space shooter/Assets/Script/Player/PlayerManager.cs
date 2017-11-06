@@ -7,4 +7,10 @@ public class PlayerManager : BaseCharacter
         Debug.Log("Player dead");
         Destroy(gameObject);
     }
+
+    public override void TakeDamage(int damage)
+    {
+        // UI stuff
+        base.TakeDamage(damage);
+    }
 }

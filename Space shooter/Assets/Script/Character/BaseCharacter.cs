@@ -19,7 +19,8 @@ public abstract class BaseCharacter : MonoBehaviour, IDamageable
         {
             health = 0;
             Die();
-        }    
+        }
+        //Animation damaged
     }
 
     public abstract void Die();

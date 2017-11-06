@@ -67,7 +67,7 @@ public class PlayerShooterController : MonoBehaviour, IShooterController
 
     private void BulletHasHitSomething(Collider2D collision, BaseBullet sender)
     {
-        if (collision.gameObject == gameObject ||collision.GetComponent<PickupItem>() != null)
+        if (collision == null || collision.gameObject == gameObject || collision.GetComponent<PickupItem>() != null)
             return;
         
         sender.CollideEffect();

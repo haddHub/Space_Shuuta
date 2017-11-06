@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour 
 {
@@ -6,6 +7,15 @@ public class UIManager : MonoBehaviour
     private InventoryUI inventoryUI;
     [SerializeField]
     private EquipementUI equipementUI;
+    [SerializeField]
+    private Text score;
+
+    public static UIManager instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -19,5 +29,10 @@ public class UIManager : MonoBehaviour
             inventoryUI.ShowOrHideInventory();
             equipementUI.ShowOrHideEquipement();
         }
+    }
+
+    public void UpdateScore(int newScore)
+    {
+        score.text = newScore.ToString();
     }
 }
